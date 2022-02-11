@@ -2,46 +2,42 @@ package com.kozlovskiy.avitoweather.presentation.location.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.kozlovskiy.avitoweather.databinding.SimpleLocationItemBinding
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import androidx.viewbinding.ViewBinding
+import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.presentation.location.adapter.base.BaseLocationsDelegate
+import com.kozlovskiy.avitoweather.presentation.location.adapter.base.BaseLocationsViewHolder
 
-class LocationsAdapter : ListAdapter<SimpleLocation, LocationsAdapter.LocationsViewHolder>(
-    SimpleLocationDiffCallback()
+class LocationsAdapter(
+    private val delegates: List<BaseLocationsDelegate<*, *>>
+) : ListAdapter<LocationListItem, BaseLocationsViewHolder<ViewBinding, LocationListItem>>(
+    LocationItemDiffCallback(delegates)
 ) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationsViewHolder {
-        val binding = SimpleLocationItemBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return LocationsViewHolder(binding)
+    @Suppress("UNCHECKED_CAST")
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseLocationsViewHolder<ViewBinding, LocationListItem> {
+        val inflater = LayoutInflater.from(parent.context)
+        return delegates.find { it.getLayoutId() == viewType }
+            ?.getViewHolder(inflater, parent)
+            ?.let { it as BaseLocationsViewHolder<ViewBinding, LocationListItem> }
+            ?: throw IllegalArgumentException()
     }
 
-    override fun onBindViewHolder(holder: LocationsViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: BaseLocationsViewHolder<ViewBinding, LocationListItem>,
+        position: Int
+    ) {
         val location = getItem(position)
         holder.bind(location)
     }
 
-    class LocationsViewHolder(
-        private val binding: SimpleLocationItemBinding,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(location: SimpleLocation) {
-            binding.tvLocationName.text = location.name
-        }
-    }
-
-    class SimpleLocationDiffCallback : DiffUtil.ItemCallback<SimpleLocation>() {
-        override fun areItemsTheSame(oldItem: SimpleLocation, newItem: SimpleLocation): Boolean {
-            return oldItem.latitude == newItem.latitude
-                    && oldItem.longitude == newItem.longitude
-        }
-
-        override fun areContentsTheSame(oldItem: SimpleLocation, newItem: SimpleLocation): Boolean {
-            return oldItem == newItem
-        }
+    override fun getItemViewType(position: Int): Int {
+        val item = getItem(position)
+        return delegates.find { it.isRelativeItem(item) }
+            ?.getLayoutId()
+            ?: throw IllegalArgumentException()
     }
 }

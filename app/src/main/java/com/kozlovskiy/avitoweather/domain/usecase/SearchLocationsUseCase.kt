@@ -32,7 +32,7 @@ class SearchLocationsUseCase @Inject constructor(
     }.flowOn(dispatcher)
 
     companion object {
-        const val LOCATIONS_LIMIT = 10
+        const val LOCATIONS_LIMIT = 5
     }
 }
 

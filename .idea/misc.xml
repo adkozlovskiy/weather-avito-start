@@ -3,16 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/drawable/daily_divider.xml" value="0.202" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/additional_item.xml" value="0.5541666666666667" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/daily_item.xml" value="0.33" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/hourly_item.xml" value="0.33" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/location_fragmen.xml" value="0.5541666666666667" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/drawable/ic_return.xml" value="0.206" />
         <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/location_fragment.xml" value="0.33" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/main_activity.xml" value="0.22" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/simple_location_item.xml" value="0.5541666666666667" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/summary_fragment.xml" value="0.33" />
-        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/menu/locations_menu.xml" value="0.3645833333333333" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/location_item.xml" value="0.3645833333333333" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/main_activity.xml" value="0.5541666666666667" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/my_location_item.xml" value="0.33" />
       </map>
     </option>
   </component>

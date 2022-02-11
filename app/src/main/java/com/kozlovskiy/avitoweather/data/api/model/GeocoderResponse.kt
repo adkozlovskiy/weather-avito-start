@@ -22,7 +22,9 @@ data class GeocoderResponse(
         return SimpleLocation(
             latitude = latitude,
             longitude = longitude,
-            name = localizeName(name, localNames)
+            locality = localizeName(name, localNames),
+            state = state,
+            country = country
         )
     }
 
@@ -37,16 +39,6 @@ data class GeocoderResponse(
             localNames[countryCode] ?: name
         }
 
-        val localizedName = StringBuilder()
-        localizedName.append("$localized, ")
-
-        if (state != null) {
-            localizedName.append("$state, ")
-        }
-
-        if (country != null) {
-            localizedName.append(country)
-        }
-        return localizedName.toString()
+        return localized
     }
 }

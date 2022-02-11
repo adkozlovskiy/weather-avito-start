@@ -42,7 +42,7 @@ class SummaryViewModel @Inject constructor(
                     _summaryState.update {
                         it.copy(
                             loading = false,
-                            location = result.location.name,
+                            location = result.location.locality,
                             current = result.oneCall.current,
                             daily = result.oneCall.dailies,
                             hourly = result.oneCall.hourlies

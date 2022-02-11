@@ -3,4 +3,7 @@
     <string name="feels_like">Feels like: %1$s</string>
     <string name="locations">Locations</string>
     <string name="search">Search</string>
+    <string name="no_such_place">No such place</string>
+    <string name="state_format">%1$s, %2$s</string>
+    <string name="my_location">My location</string>
 </resources>
