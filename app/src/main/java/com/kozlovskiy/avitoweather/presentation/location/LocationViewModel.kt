@@ -1,9 +1,9 @@
 package com.kozlovskiy.avitoweather.presentation.location
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
 import com.kozlovskiy.avitoweather.domain.usecase.SearchLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,23 +17,28 @@ import javax.inject.Inject
 @HiltViewModel
 class LocationViewModel @Inject constructor(
     private val searchLocationsUseCase: SearchLocationsUseCase,
+    private val getPopularLocationsUseCase: GetPopularLocationsUseCase,
 ) : ViewModel() {
 
     private val _locationState = MutableStateFlow(LocationState())
     val locationState = _locationState.asStateFlow()
 
-    fun onLocationSelected(location: SimpleLocation) = viewModelScope
-        .launch {
-            _locationState.update { it.copy(currentLocation = location) }
-        }
+//    fun onLocationSelected(location: SimpleLocation) = viewModelScope
+//        .launch {
+//            _locationState.update { it.copy(currentLocation = location) }
+//        }
+
+    init {
+        setDefaultLocations()
+    }
 
     fun searchForLocations(query: String?) = viewModelScope.launch {
-        if (query.isNullOrEmpty()) {
+        if (query.isNullOrBlank()) {
+            setDefaultLocations()
             return@launch
         }
 
         searchLocationsUseCase(query).collect { result ->
-            Log.d("TAG", "searchForLocations: $result")
             when (result) {
                 is LocationsResult.Loading -> {
                     _locationState.update {
@@ -44,7 +49,11 @@ class LocationViewModel @Inject constructor(
                     _locationState.update {
                         it.copy(
                             loading = false,
-                            locations = result.locations
+                            locations = result.locations.map { simpleLocation ->
+                                LocationListItem.Location.fromSimpleLocation(
+                                    simpleLocation
+                                )
+                            }
                         )
                     }
                 }
@@ -54,6 +63,13 @@ class LocationViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun setDefaultLocations() = viewModelScope.launch {
+        val popularLocations = getPopularLocationsUseCase()
+        _locationState.update {
+            it.copy(locations = popularLocations)
         }
     }
 }

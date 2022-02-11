@@ -3,6 +3,8 @@ package com.kozlovskiy.avitoweather.di.module
 import com.kozlovskiy.avitoweather.data.repository.GeocoderRepositoryImpl
 import com.kozlovskiy.avitoweather.data.repository.WeatherRepositoryImpl
 import com.kozlovskiy.avitoweather.domain.repository.GeocoderRepository
+import com.kozlovskiy.avitoweather.domain.repository.LocationsRepository
+import com.kozlovskiy.avitoweather.domain.repository.LocationsRepositoryImpl
 import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
 import dagger.Binds
 import dagger.Module
@@ -18,5 +20,8 @@ interface RepositoryModule {
 
     @Binds
     fun bindGeocoderRepository(impl: GeocoderRepositoryImpl): GeocoderRepository
+
+    @Binds
+    fun bindLocationsRepository(impl: LocationsRepositoryImpl): LocationsRepository
 
 }
