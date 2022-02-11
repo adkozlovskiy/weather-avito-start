@@ -14,6 +14,7 @@ class SimpleLocationManager @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) {
 
+    // TODO check for google services installed or use default location manager
     suspend fun askForLastLocation(): SimpleLocationResult {
         // Checking for permissions
         if (ActivityCompat.checkSelfPermission(
