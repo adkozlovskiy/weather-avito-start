@@ -8,7 +8,7 @@ class GetPopularLocationsUseCase @Inject constructor(
     private val locationsRepository: LocationsRepository,
 ) {
 
-    suspend operator fun invoke(): List<LocationListItem> {
+    operator fun invoke(): List<LocationListItem> {
         return locationsRepository.getPopularLocations()
     }
 }

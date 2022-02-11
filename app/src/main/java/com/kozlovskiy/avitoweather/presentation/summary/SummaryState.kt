@@ -9,7 +9,7 @@ data class SummaryState(
     val current: Current? = null,
     val hourly: List<Hourly> = emptyList(),
     val daily: List<Daily> = emptyList(),
-    val loading: Boolean = true,
+    val loading: Boolean = false,
     val failure: FailureInfo? = null,
 ) {
     sealed class FailureInfo {

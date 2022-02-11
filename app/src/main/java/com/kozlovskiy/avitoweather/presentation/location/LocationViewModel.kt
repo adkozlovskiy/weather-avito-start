@@ -2,6 +2,7 @@ package com.kozlovskiy.avitoweather.presentation.location
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
 import com.kozlovskiy.avitoweather.domain.model.LocationListItem
 import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
@@ -18,15 +19,21 @@ import javax.inject.Inject
 class LocationViewModel @Inject constructor(
     private val searchLocationsUseCase: SearchLocationsUseCase,
     private val getPopularLocationsUseCase: GetPopularLocationsUseCase,
+    private val sharedPreferenceManager: SharedPreferenceManager,
 ) : ViewModel() {
 
     private val _locationState = MutableStateFlow(LocationState())
     val locationState = _locationState.asStateFlow()
 
-//    fun onLocationSelected(location: SimpleLocation) = viewModelScope
-//        .launch {
-//            _locationState.update { it.copy(currentLocation = location) }
-//        }
+    fun onLocationSelected(location: LocationListItem.Location?) = viewModelScope
+        .launch {
+            location?.let {
+                sharedPreferenceManager.storeLocation(
+                    latitude = it.latitude,
+                    longitude = it.longitude
+                )
+            } ?: sharedPreferenceManager.chooseMyLocation()
+        }
 
     init {
         setDefaultLocations()

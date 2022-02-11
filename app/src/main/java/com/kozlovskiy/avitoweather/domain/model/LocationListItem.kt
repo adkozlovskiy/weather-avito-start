@@ -5,8 +5,8 @@ sealed class LocationListItem {
         val locality: String?,
         val country: String?,
         val state: String?,
-        val latitude: Double,
-        val longitude: Double,
+        val latitude: Float,
+        val longitude: Float,
     ) : LocationListItem() {
         companion object {
             fun fromSimpleLocation(simpleLocation: SimpleLocation): Location {

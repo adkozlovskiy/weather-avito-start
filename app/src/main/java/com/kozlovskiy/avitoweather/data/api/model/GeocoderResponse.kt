@@ -10,9 +10,9 @@ data class GeocoderResponse(
     @SerializedName("local_names")
     val localNames: Map<String, String>,
     @SerializedName("lat")
-    val latitude: Double,
+    val latitude: Float,
     @SerializedName("lon")
-    val longitude: Double,
+    val longitude: Float,
     @SerializedName("state")
     val state: String?,
     @SerializedName("country")

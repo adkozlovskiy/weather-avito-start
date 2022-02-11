@@ -14,8 +14,8 @@ suspend fun FusedLocationProviderClient.awaitLastLocation(): SimpleLocation? =
         lastLocation.addOnSuccessListener { location ->
             continuation.resume(
                 SimpleLocation(
-                    latitude = location.latitude,
-                    longitude = location.longitude
+                    latitude = location.latitude.toFloat(),
+                    longitude = location.longitude.toFloat()
                 ),
                 onCancellation = null
             )

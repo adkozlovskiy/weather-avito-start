@@ -20,11 +20,12 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow(value = SummaryState())
     val summaryState = _summaryState.asStateFlow()
 
-    init {
-        loadWeather()
-    }
+    fun loadWeather() = viewModelScope.launch {
+        // If already in progress.
+        if (_summaryState.value.loading) {
+            return@launch
+        }
 
-    private fun loadWeather() = viewModelScope.launch {
         getWeatherUseCase().collect { result ->
             when (result) {
                 is WeatherResult.Loading -> {

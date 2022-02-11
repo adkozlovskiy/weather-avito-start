@@ -10,7 +10,9 @@ class GeocoderUtils @Inject constructor(
 
     fun completeLocationWithName(location: SimpleLocation): SimpleLocation {
         val addresses = geocoder.getFromLocation(
-            location.latitude, location.longitude, 1
+            location.latitude.toDouble(),
+            location.longitude.toDouble(),
+            1
         )
         val address = addresses[0]
         val name = address.locality ?: address.countryName

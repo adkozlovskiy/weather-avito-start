@@ -9,8 +9,8 @@ interface OpenweatherService {
 
     @GET("data/2.5/onecall")
     suspend fun getOneCallWeather(
-        @Query("lat") latitude: Double,
-        @Query("lon") longitude: Double
+        @Query("lat") latitude: Float,
+        @Query("lon") longitude: Float
     ): OneCallResponse
 
     @GET("geo/1.0/direct")

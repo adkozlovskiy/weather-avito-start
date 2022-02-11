@@ -9,7 +9,9 @@ import com.kozlovskiy.avitoweather.domain.model.LocationListItem
 import com.kozlovskiy.avitoweather.presentation.location.adapter.base.BaseLocationsDelegate
 import com.kozlovskiy.avitoweather.presentation.location.adapter.base.BaseLocationsViewHolder
 
-class LocationDelegate : BaseLocationsDelegate<LocationItemBinding, LocationListItem.Location> {
+class LocationDelegate(
+    private val onLocationSelected: (LocationListItem.Location) -> Unit,
+) : BaseLocationsDelegate<LocationItemBinding, LocationListItem.Location> {
     override fun isRelativeItem(item: LocationListItem): Boolean {
         return item is LocationListItem.Location
     }
@@ -45,7 +47,7 @@ class LocationDelegate : BaseLocationsDelegate<LocationItemBinding, LocationList
         }
     }
 
-    class LocationsViewHolder(
+    inner class LocationsViewHolder(
         private val binding: LocationItemBinding,
     ) : BaseLocationsViewHolder<LocationItemBinding, LocationListItem.Location>(binding) {
         override fun bind(item: LocationListItem.Location) {
@@ -53,6 +55,10 @@ class LocationDelegate : BaseLocationsDelegate<LocationItemBinding, LocationList
             with(binding) {
                 locality.text = item.locality
                 state.text = stateInfo
+
+                root.setOnClickListener {
+                    onLocationSelected(item)
+                }
             }
         }
     }
