@@ -51,6 +51,9 @@ dependencies {
     // Adapter delegate
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
 
+    // For repeatOnLifecycle
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+
     // Location
     implementation 'com.google.android.gms:play-services-location:19.0.1'
 

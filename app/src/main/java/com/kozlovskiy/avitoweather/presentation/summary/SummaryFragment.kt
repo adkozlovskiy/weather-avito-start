@@ -5,17 +5,17 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kozlovskiy.avitoweather.R
+import com.kozlovskiy.avitoweather.common.collectOnLifecycle
 import com.kozlovskiy.avitoweather.databinding.SummaryFragmentBinding
 import com.kozlovskiy.avitoweather.domain.model.Current
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyDividerDecorator
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyWeatherAdapter
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.HourlyWeatherAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class SummaryFragment : Fragment(R.layout.summary_fragment) {
@@ -32,29 +32,29 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
         setUpClickListeners()
         setUpRecyclerViews()
 
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            viewModel.summaryState.collect { summaryState ->
-                setProgressbarVisible(summaryState.loading)
-                Log.d("TAG", "onViewCreated: $summaryState")
-                when (summaryState.failure) {
-                    is SummaryState.FailureInfo.NoLocationPermission -> {
+        viewModel.summaryState.collectOnLifecycle(
+            lifecycleOwner = viewLifecycleOwner,
+            state = Lifecycle.State.STARTED
+        ) { summaryState ->
+            setProgressbarVisible(summaryState.loading)
+            when (summaryState.failure) {
+                is SummaryState.FailureInfo.NoLocationPermission -> {
 
-                    }
-                    is SummaryState.FailureInfo.BadLocation -> {
+                }
+                is SummaryState.FailureInfo.BadLocation -> {
 
-                    }
-                    is SummaryState.FailureInfo.Unknown -> {
-                        Log.d("TAG", "onViewCreated: ${summaryState.failure.ex}")
-                    }
-                    null -> {
-                        showLocationInfo(summaryState.location)
+                }
+                is SummaryState.FailureInfo.Unknown -> {
+                    Log.d("TAG", "onViewCreated: ${summaryState.failure.ex}")
+                }
+                null -> {
+                    showLocationInfo(summaryState.location)
 
-                        if (summaryState.current != null) {
-                            showCurrentWeather(summaryState.current)
-                        }
-                        dailyAdapter.submitList(summaryState.daily)
-                        hourlyAdapter.submitList(summaryState.hourly)
+                    if (summaryState.current != null) {
+                        showCurrentWeather(summaryState.current)
                     }
+                    dailyAdapter.submitList(summaryState.daily)
+                    hourlyAdapter.submitList(summaryState.hourly)
                 }
             }
         }
