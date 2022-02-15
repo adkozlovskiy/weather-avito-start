@@ -14,8 +14,8 @@ data class PopularLocation(
     @SerializedName("state")
     val state: String,
 ) {
-    fun toLocation(): LocationListItem.Location {
-        return LocationListItem.Location(
+    fun toListLocation(): ListLocation {
+        return ListLocation(
             locality = city,
             latitude = lat.toFloat(),
             longitude = lng.toFloat(),

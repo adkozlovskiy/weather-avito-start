@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.MyLocation
 import com.kozlovskiy.avitoweather.domain.model.PopularLocation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
@@ -32,10 +33,10 @@ class LocationsRepositoryImpl @Inject constructor(
         )
 
         val popularLocations = popularCities.map {
-            it.toLocation()
+            it.toListLocation()
         }
 
-        return listOf(LocationListItem.MyLocation) + popularLocations
+        return listOf(MyLocation) + popularLocations
     }
 
     companion object {

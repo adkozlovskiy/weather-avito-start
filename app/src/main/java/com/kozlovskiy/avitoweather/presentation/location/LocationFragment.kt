@@ -12,8 +12,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kozlovskiy.avitoweather.R
 import com.kozlovskiy.avitoweather.databinding.LocationFragmentBinding
 import com.kozlovskiy.avitoweather.presentation.location.adapter.LocationsAdapter
-import com.kozlovskiy.avitoweather.presentation.location.adapter.delegate.LocationDelegate
-import com.kozlovskiy.avitoweather.presentation.location.adapter.delegate.MyLocationDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -23,25 +21,15 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
     private val viewModel: LocationViewModel by viewModels()
     private val binding by viewBinding(LocationFragmentBinding::bind)
 
-    private val locationAdapterDelegates = listOf(
-        LocationDelegate(
-            onLocationSelected = {
-                viewModel.onLocationSelected(it)
-            }
-        ),
-        MyLocationDelegate(
-            onSelected = {
-                viewModel.onLocationSelected(null)
-            }
-        )
-    )
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar()
         setUpSearch()
 
-        val locationsAdapter = LocationsAdapter(locationAdapterDelegates)
+        val locationsAdapter = LocationsAdapter(
+            onLocationSelected = { viewModel.onLocationSelected(it) },
+            onMyLocationSelected = { viewModel.onMyLocationSelected() }
+        )
         binding.rvLocations.adapter = locationsAdapter
 
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -56,7 +44,7 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
                 setNoSuchPlaceVisible(noSuchPlace)
                 setRecyclerViewVisible(!noSuchPlace)
 
-                locationsAdapter.submitList(it.locations)
+                locationsAdapter.items = it.locations
             }
         }
     }

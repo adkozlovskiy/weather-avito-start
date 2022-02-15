@@ -48,6 +48,9 @@ dependencies {
     // ViewBinding delegate
     implementation 'com.github.kirich1409:viewbindingpropertydelegate-noreflection:1.5.3'
 
+    // Adapter delegate
+    implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.1'
+
     // Location
     implementation 'com.google.android.gms:play-services-location:19.0.1'
 
