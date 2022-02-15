@@ -60,6 +60,11 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.loadWeather()
+    }
+
     private fun showLocationInfo(location: String?) {
         binding.tvLocation.text = location ?: ""
     }

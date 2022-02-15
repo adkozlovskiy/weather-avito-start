@@ -24,8 +24,16 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
     private val binding by viewBinding(LocationFragmentBinding::bind)
 
     private val locationAdapterDelegates = listOf(
-        LocationDelegate(),
-        MyLocationDelegate()
+        LocationDelegate(
+            onLocationSelected = {
+                viewModel.onLocationSelected(it)
+            }
+        ),
+        MyLocationDelegate(
+            onSelected = {
+                viewModel.onLocationSelected(null)
+            }
+        )
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

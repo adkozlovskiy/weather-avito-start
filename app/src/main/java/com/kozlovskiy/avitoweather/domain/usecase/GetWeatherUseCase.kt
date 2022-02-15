@@ -2,9 +2,10 @@ package com.kozlovskiy.avitoweather.domain.usecase
 
 import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
-import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
+import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
 import com.kozlovskiy.avitoweather.domain.model.OneCall
 import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
 import com.kozlovskiy.avitoweather.domain.util.GeocoderUtils
 import com.kozlovskiy.avitoweather.domain.util.SimpleLocationManager
 import com.kozlovskiy.avitoweather.domain.util.SimpleLocationResult
@@ -18,17 +19,20 @@ class GetWeatherUseCase @Inject constructor(
     private val repository: WeatherRepository,
     private val locationManager: SimpleLocationManager,
     private val geocoderUtils: GeocoderUtils,
+    private val sharedPreferenceManager: SharedPreferenceManager,
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
 ) {
     operator fun invoke(): Flow<WeatherResult> = flow {
         emit(WeatherResult.Loading)
 
+        val storedLocation = sharedPreferenceManager.getStoredLocation()
+
         val simpleLocationResult: SimpleLocationResult =
             SimpleLocationResult.Success(
-                SimpleLocation(
-                    latitude = 55.7146576,
-                    longitude = 37.8022313
+                storedLocation ?: SimpleLocation(
+                    latitude = 55.7146576f,
+                    longitude = 37.8022313f
                 )
             )
 //        val simpleLocationResult = locationManager.askForLastLocation()

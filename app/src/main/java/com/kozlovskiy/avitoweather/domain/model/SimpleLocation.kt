@@ -1,8 +1,8 @@
 package com.kozlovskiy.avitoweather.domain.model
 
 data class SimpleLocation(
-    val latitude: Double,
-    val longitude: Double,
+    val latitude: Float,
+    val longitude: Float,
     val locality: String? = null,
     val country: String? = null,
     val state: String? = null,

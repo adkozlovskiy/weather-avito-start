@@ -17,8 +17,8 @@ data class PopularLocation(
     fun toLocation(): LocationListItem.Location {
         return LocationListItem.Location(
             locality = city,
-            latitude = lat.toDouble(),
-            longitude = lng.toDouble(),
+            latitude = lat.toFloat(),
+            longitude = lng.toFloat(),
             country = country,
             state = state
         )
