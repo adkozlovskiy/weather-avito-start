@@ -3,7 +3,7 @@ package com.kozlovskiy.avitoweather.presentation.location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
-import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.ListLocation
 import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
 import com.kozlovskiy.avitoweather.domain.usecase.SearchLocationsUseCase
@@ -25,15 +25,17 @@ class LocationViewModel @Inject constructor(
     private val _locationState = MutableStateFlow(LocationState())
     val locationState = _locationState.asStateFlow()
 
-    fun onLocationSelected(location: LocationListItem.Location?) = viewModelScope
+    fun onLocationSelected(location: ListLocation) = viewModelScope
         .launch {
-            location?.let {
-                sharedPreferenceManager.storeLocation(
-                    latitude = it.latitude,
-                    longitude = it.longitude
-                )
-            } ?: sharedPreferenceManager.chooseMyLocation()
+            sharedPreferenceManager.storeLocation(
+                latitude = location.latitude,
+                longitude = location.longitude
+            )
         }
+
+    fun onMyLocationSelected() = viewModelScope.launch {
+        sharedPreferenceManager.chooseMyLocation()
+    }
 
     init {
         setDefaultLocations()
@@ -57,9 +59,7 @@ class LocationViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             locations = result.locations.map { simpleLocation ->
-                                LocationListItem.Location.fromSimpleLocation(
-                                    simpleLocation
-                                )
+                                ListLocation.fromSimpleLocation(simpleLocation)
                             }
                         )
                     }
