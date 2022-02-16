@@ -1,0 +1,121 @@
+[
+  {
+    "city": "Moscow",
+    "lat": "55.7558",
+    "lng": "37.6178",
+    "country": "Russia",
+    "state": "Moscow"
+  },
+  {
+    "city": "Saint Petersburg",
+    "lat": "59.9500",
+    "lng": "30.3167",
+    "country": "Russia",
+    "state": "Leningrad region"
+  },
+  {
+    "city": "Novosibirsk",
+    "lat": "55.0333",
+    "lng": "82.9167",
+    "country": "Russia",
+    "state": "Novosibirsk region"
+  },
+  {
+    "city": "Yekaterinburg",
+    "lat": "56.8356",
+    "lng": "60.6128",
+    "country": "Russia",
+    "state": "Yekaterinburg region"
+  },
+  {
+    "city": "Nizhny Novgorod",
+    "lat": "56.3269",
+    "lng": "44.0075",
+    "country": "Russia",
+    "state": "Nizhny Novgorod region"
+  },
+  {
+    "city": "Kazan",
+    "lat": "55.7908",
+    "lng": "49.1144",
+    "country": "Russia",
+    "state": "Tatarstan"
+  },
+  {
+    "city": "Chelyabinsk",
+    "lat": "55.1500",
+    "lng": "61.4000",
+    "country": "Russia",
+    "state": "Chelyabinsk region"
+  },
+  {
+    "city": "Omsk",
+    "lat": "54.9667",
+    "lng": "73.3833",
+    "country": "Russia",
+    "state": "Omsk region"
+  },
+  {
+    "city": "Samara",
+    "lat": "53.1833",
+    "lng": "50.1167",
+    "country": "Russia",
+    "state": "Samara region"
+  },
+  {
+    "city": "Rostov",
+    "lat": "47.2333",
+    "lng": "39.7167",
+    "country": "Russia",
+    "state": "Rostov region"
+  },
+  {
+    "city": "Ufa",
+    "lat": "54.7333",
+    "lng": "55.9667",
+    "country": "Russia",
+    "state": "Bashkortostan"
+  },
+  {
+    "city": "Krasnoyarsk",
+    "lat": "56.0167",
+    "lng": "92.8667",
+    "country": "Russia",
+    "state": "Krasnoyarsk region"
+  },
+  {
+    "city": "Perm",
+    "lat": "58.0139",
+    "lng": "56.2489",
+    "country": "Russia",
+    "state": "Perm region"
+  },
+  {
+    "city": "Voronezh",
+    "lat": "51.6717",
+    "lng": "39.2106",
+    "country": "Russia",
+    "state": "Voronezh region"
+  },
+  {
+    "city": "Volgograd",
+    "lat": "48.7086",
+    "lng": "44.5147",
+    "country": "Russia",
+    "state": "Volgograd region"
+  },
+  {
+    "city": "Krasnodar",
+    "lat": "45.0333",
+    "lng": "38.9833",
+    "country": "Russia",
+    "state": "Krasnodar region"
+  },
+  {
+    "city": "Saratov",
+    "lat": "51.5333",
+    "lng": "46.0000",
+    "country": "Russia",
+    "state": "Saratov region"
+  }
+]

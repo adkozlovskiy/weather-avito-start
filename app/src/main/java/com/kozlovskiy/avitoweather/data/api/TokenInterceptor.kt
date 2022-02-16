@@ -25,7 +25,6 @@ class TokenInterceptor : Interceptor {
         const val TOKEN_PARAM_NAME = "appid"
         const val EXCLUDE_PARAM_NAME = "exclude"
 
-        // todo can we hide this?
         const val TOKEN = "ccd11b37c3e195a9d65eef947fccef27"
         const val EXCLUDE = "minutely,alerts"
     }

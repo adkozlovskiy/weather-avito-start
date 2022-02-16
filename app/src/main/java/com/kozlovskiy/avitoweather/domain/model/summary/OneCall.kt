@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.domain.model
+package com.kozlovskiy.avitoweather.domain.model.summary
 
 data class OneCall(
     val current: Current,

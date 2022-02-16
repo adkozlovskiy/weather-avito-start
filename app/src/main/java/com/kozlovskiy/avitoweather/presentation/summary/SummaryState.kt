@@ -1,8 +1,8 @@
 package com.kozlovskiy.avitoweather.presentation.summary
 
-import com.kozlovskiy.avitoweather.domain.model.Current
-import com.kozlovskiy.avitoweather.domain.model.Daily
-import com.kozlovskiy.avitoweather.domain.model.Hourly
+import com.kozlovskiy.avitoweather.domain.model.summary.Current
+import com.kozlovskiy.avitoweather.domain.model.summary.Daily
+import com.kozlovskiy.avitoweather.domain.model.summary.Hourly
 
 data class SummaryState(
     val location: String? = null,

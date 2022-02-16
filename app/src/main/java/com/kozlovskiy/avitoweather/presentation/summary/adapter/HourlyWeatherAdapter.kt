@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kozlovskiy.avitoweather.databinding.HourlyItemBinding
-import com.kozlovskiy.avitoweather.domain.model.Hourly
+import com.kozlovskiy.avitoweather.domain.model.summary.Hourly
 
 class HourlyWeatherAdapter : ListAdapter<Hourly, HourlyWeatherAdapter.HourlyWeatherViewHolder>(
     HourlyDiffCallback()

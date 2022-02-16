@@ -7,7 +7,7 @@ import com.kozlovskiy.avitoweather.R
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-interface IconResolver {
+fun interface IconResolver {
     fun resolve(iconStr: String): Drawable
 }
 

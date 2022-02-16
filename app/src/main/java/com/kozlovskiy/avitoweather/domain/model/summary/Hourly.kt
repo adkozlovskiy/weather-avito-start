@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.domain.model
+package com.kozlovskiy.avitoweather.domain.model.summary
 
 import android.graphics.drawable.Drawable
 

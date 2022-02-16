@@ -4,7 +4,7 @@ import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.data.api.OpenweatherService
 import com.kozlovskiy.avitoweather.di.qualifier.DefaultResolver
 import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
-import com.kozlovskiy.avitoweather.domain.model.OneCall
+import com.kozlovskiy.avitoweather.domain.model.summary.OneCall
 import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.util.IconResolver
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 package com.kozlovskiy.avitoweather.data.api.model
 
 import com.google.gson.annotations.SerializedName
-import com.kozlovskiy.avitoweather.domain.model.Daily
+import com.kozlovskiy.avitoweather.domain.model.summary.Daily
 import com.kozlovskiy.avitoweather.domain.util.IconResolver
 import com.kozlovskiy.avitoweather.domain.util.ScaleUtils
 

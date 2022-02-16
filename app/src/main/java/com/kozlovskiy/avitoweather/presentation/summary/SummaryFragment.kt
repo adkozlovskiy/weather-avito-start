@@ -11,7 +11,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.kozlovskiy.avitoweather.R
 import com.kozlovskiy.avitoweather.common.collectOnLifecycle
 import com.kozlovskiy.avitoweather.databinding.SummaryFragmentBinding
-import com.kozlovskiy.avitoweather.domain.model.Current
+import com.kozlovskiy.avitoweather.domain.model.summary.Current
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyDividerDecorator
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyWeatherAdapter
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.HourlyWeatherAdapter

@@ -1,7 +1,7 @@
 package com.kozlovskiy.avitoweather.data.api.model
 
 import com.google.gson.annotations.SerializedName
-import com.kozlovskiy.avitoweather.domain.model.OneCall
+import com.kozlovskiy.avitoweather.domain.model.summary.OneCall
 import com.kozlovskiy.avitoweather.domain.util.IconResolver
 
 data class OneCallResponse(

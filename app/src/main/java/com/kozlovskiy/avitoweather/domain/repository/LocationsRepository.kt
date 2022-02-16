@@ -3,6 +3,7 @@ package com.kozlovskiy.avitoweather.domain.repository
 import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.kozlovskiy.avitoweather.R
 import com.kozlovskiy.avitoweather.domain.model.LocationListItem
 import com.kozlovskiy.avitoweather.domain.model.MyLocation
 import com.kozlovskiy.avitoweather.domain.model.PopularLocation
@@ -22,11 +23,10 @@ class LocationsRepositoryImpl @Inject constructor(
 ) : LocationsRepository {
 
     override fun getPopularLocations(): List<LocationListItem> {
-        val popularCitiesJson = appContext.assets
-            .open(POPULAR_CITIES_FILE_NAME)
-            .bufferedReader().use {
-                it.readText()
-            }
+        val popularCitiesJson = appContext.resources
+            .openRawResource(R.raw.popular_cities)
+            .bufferedReader()
+            .use { it.readText() }
 
         val popularCities = gson.fromJson<List<PopularLocation>>(
             popularCitiesJson, popularLocationType
@@ -40,7 +40,6 @@ class LocationsRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        const val POPULAR_CITIES_FILE_NAME = "popular_cities.json"
         private val popularLocationType = TypeToken.getParameterized(
             List::class.java,
             PopularLocation::class.java

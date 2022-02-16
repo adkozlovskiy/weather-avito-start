@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kozlovskiy.avitoweather.databinding.DailyItemBinding
-import com.kozlovskiy.avitoweather.domain.model.Daily
+import com.kozlovskiy.avitoweather.domain.model.summary.Daily
 
 class DailyWeatherAdapter : ListAdapter<Daily, DailyWeatherAdapter.DailyWeatherViewHolder>(
     DailyDiffCallback()

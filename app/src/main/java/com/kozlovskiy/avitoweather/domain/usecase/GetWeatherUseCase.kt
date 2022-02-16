@@ -3,7 +3,7 @@ package com.kozlovskiy.avitoweather.domain.usecase
 import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
-import com.kozlovskiy.avitoweather.domain.model.OneCall
+import com.kozlovskiy.avitoweather.domain.model.summary.OneCall
 import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
 import com.kozlovskiy.avitoweather.domain.util.GeocoderUtils
