@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.domain.model
+package com.kozlovskiy.avitoweather.domain.model.location
 
 import com.google.gson.annotations.SerializedName
 

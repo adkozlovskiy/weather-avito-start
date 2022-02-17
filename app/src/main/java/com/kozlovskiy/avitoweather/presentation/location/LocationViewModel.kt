@@ -3,7 +3,7 @@ package com.kozlovskiy.avitoweather.presentation.location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
-import com.kozlovskiy.avitoweather.domain.model.ListLocation
+import com.kozlovskiy.avitoweather.domain.model.location.ListLocation
 import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
 import com.kozlovskiy.avitoweather.domain.usecase.SearchLocationsUseCase

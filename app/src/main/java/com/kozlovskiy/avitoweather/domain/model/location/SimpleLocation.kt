@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.domain.model
+package com.kozlovskiy.avitoweather.domain.model.location
 
 data class SimpleLocation(
     val latitude: Float,

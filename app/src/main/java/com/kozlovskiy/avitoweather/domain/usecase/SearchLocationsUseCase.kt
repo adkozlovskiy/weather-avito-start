@@ -2,7 +2,7 @@ package com.kozlovskiy.avitoweather.domain.usecase
 
 import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.repository.GeocoderRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

@@ -2,7 +2,7 @@ package com.kozlovskiy.avitoweather.domain
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import javax.inject.Inject
 import javax.inject.Singleton
 

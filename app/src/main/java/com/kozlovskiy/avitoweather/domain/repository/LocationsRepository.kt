@@ -4,9 +4,9 @@ import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kozlovskiy.avitoweather.R
-import com.kozlovskiy.avitoweather.domain.model.LocationListItem
-import com.kozlovskiy.avitoweather.domain.model.MyLocation
-import com.kozlovskiy.avitoweather.domain.model.PopularLocation
+import com.kozlovskiy.avitoweather.domain.model.location.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.location.MyLocation
+import com.kozlovskiy.avitoweather.domain.model.location.PopularLocation
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton

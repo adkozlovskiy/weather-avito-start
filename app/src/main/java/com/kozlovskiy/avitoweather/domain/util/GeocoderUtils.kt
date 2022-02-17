@@ -1,7 +1,7 @@
 package com.kozlovskiy.avitoweather.domain.util
 
 import android.location.Geocoder
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import javax.inject.Inject
 
 class GeocoderUtils @Inject constructor(

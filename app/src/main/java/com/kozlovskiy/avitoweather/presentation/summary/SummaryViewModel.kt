@@ -21,7 +21,6 @@ class SummaryViewModel @Inject constructor(
     val summaryState = _summaryState.asStateFlow()
 
     fun loadWeather() = viewModelScope.launch {
-        // If already in progress.
         if (_summaryState.value.loading) {
             return@launch
         }
@@ -50,7 +49,8 @@ class SummaryViewModel @Inject constructor(
                         )
                     }
                 }
-                is WeatherResult.BadLocation -> {
+                is WeatherResult.NullLocation -> {
+                    // TODO subscribe on location changes listener
                     _summaryState.update {
                         it.copy(
                             loading = false,
