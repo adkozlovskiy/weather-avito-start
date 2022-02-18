@@ -9,15 +9,11 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
-import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
 import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.util.awaitLastLocation
 import com.kozlovskiy.avitoweather.domain.util.awaitLastLocationUpdate
 import com.kozlovskiy.avitoweather.domain.util.getLastLocation
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SimpleLocationManager @Inject constructor(
@@ -25,8 +21,6 @@ class SimpleLocationManager @Inject constructor(
     private val locationManager: LocationManager,
     @ApplicationContext
     private val appContext: Context,
-    @IoDispatcher
-    private val dispatcher: CoroutineDispatcher,
 ) {
 
     suspend fun askForLocation(): SimpleLocationResult {
@@ -67,9 +61,8 @@ class SimpleLocationManager @Inject constructor(
                 .getLastLocation(LocationManager.GPS_PROVIDER)
 
             if (simpleLocation == null) {
-                val lastLocationUpdate = withContext(Dispatchers.Main) {
+                val lastLocationUpdate =
                     locationManager.awaitLastLocationUpdate(LocationManager.GPS_PROVIDER)
-                }
                 lastLocationUpdate?.let {
                     SimpleLocationResult.Success(it)
                 } ?: SimpleLocationResult.NullLocation

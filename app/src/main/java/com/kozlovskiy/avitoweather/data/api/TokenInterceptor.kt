@@ -1,16 +1,23 @@
 package com.kozlovskiy.avitoweather.data.api
 
+import com.kozlovskiy.avitoweather.di.qualifier.ApplicationProperties
 import okhttp3.Interceptor
 import okhttp3.Response
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class TokenInterceptor : Interceptor {
+@Singleton
+class TokenInterceptor @Inject constructor(
+    @ApplicationProperties
+    private val appId: String,
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val originalRequest = chain.request()
         val originalUrl = originalRequest.url()
 
         val url = originalUrl.newBuilder()
-            .addQueryParameter(TOKEN_PARAM_NAME, TOKEN)
+            .addQueryParameter(TOKEN_PARAM_NAME, appId)
             .addQueryParameter(EXCLUDE_PARAM_NAME, EXCLUDE)
             .build()
 
@@ -23,9 +30,8 @@ class TokenInterceptor : Interceptor {
 
     companion object {
         const val TOKEN_PARAM_NAME = "appid"
-        const val EXCLUDE_PARAM_NAME = "exclude"
 
-        const val TOKEN = "ccd11b37c3e195a9d65eef947fccef27"
+        const val EXCLUDE_PARAM_NAME = "exclude"
         const val EXCLUDE = "minutely,alerts"
     }
 }

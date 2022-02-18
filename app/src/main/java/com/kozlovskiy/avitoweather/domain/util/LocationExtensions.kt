@@ -5,14 +5,15 @@ import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.HandlerThread
-import android.util.Log
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.resumeWithException
 
 fun Location?.asSimpleLocation(): SimpleLocation? {
@@ -74,15 +75,15 @@ fun LocationManager.getLastLocation(provider: String): SimpleLocation? {
 @SuppressLint("MissingPermission")
 suspend fun LocationManager.awaitLastLocationUpdate(
     provider: String,
-): SimpleLocation? = suspendCancellableCoroutine { continuation ->
-    Log.d("TAG", "awaitLastLocationUpdate: ")
-    val locationListener = object : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            continuation.resume(location.asSimpleLocation(), onCancellation = null)
-            removeUpdates(this)
+): SimpleLocation? = withContext(Dispatchers.Main) {
+    suspendCancellableCoroutine { continuation ->
+        val locationListener = object : LocationListener {
+            override fun onLocationChanged(location: Location) {
+                continuation.resume(location.asSimpleLocation(), onCancellation = null)
+                removeUpdates(this)
+            }
         }
+        requestLocationUpdates(provider, 1L, 1f, locationListener)
+        continuation.invokeOnCancellation { removeUpdates(locationListener) }
     }
-    requestLocationUpdates(provider, 1L, 1f, locationListener)
-    continuation.invokeOnCancellation { removeUpdates(locationListener) }
-
 }
