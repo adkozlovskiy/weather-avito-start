@@ -9,6 +9,8 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
+import com.kozlovskiy.avitoweather.di.qualifier.LocationProvider
+import com.kozlovskiy.avitoweather.di.qualifier.ProviderType
 import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.util.awaitLastLocation
 import com.kozlovskiy.avitoweather.domain.util.awaitLastLocationUpdate
@@ -17,10 +19,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 class SimpleLocationManager @Inject constructor(
-    private val locationProvider: FusedLocationProviderClient,
+    private val fusedLocationProvider: FusedLocationProviderClient,
     private val locationManager: LocationManager,
     @ApplicationContext
     private val appContext: Context,
+    private val locationRequest: LocationRequest,
+    @LocationProvider(type = ProviderType.GPS_PROVIDER)
+    private val locationProvider: String,
 ) {
 
     suspend fun askForLocation(): SimpleLocationResult {
@@ -35,16 +40,17 @@ class SimpleLocationManager @Inject constructor(
 
     private suspend fun askForFusedLocation(): SimpleLocationResult {
         return try {
-            val simpleLocation = locationProvider.awaitLastLocation()
+            val simpleLocation = fusedLocationProvider.awaitLastLocation()
 
             if (simpleLocation == null) {
                 val lastLocationUpdate =
-                    locationProvider.awaitLastLocationUpdate(LocationRequest.create())
+                    fusedLocationProvider.awaitLastLocationUpdate(locationRequest)
 
-                lastLocationUpdate?.let {
-                    SimpleLocationResult.Success(it)
-                } ?: SimpleLocationResult.NullLocation
-
+                if (lastLocationUpdate != null) {
+                    SimpleLocationResult.Success(lastLocationUpdate)
+                } else {
+                    SimpleLocationResult.NullLocation
+                }
             } else {
                 SimpleLocationResult.Success(simpleLocation)
             }
@@ -57,12 +63,11 @@ class SimpleLocationManager @Inject constructor(
 
     private suspend fun askForLegacyLocation(): SimpleLocationResult {
         return try {
-            val simpleLocation = locationManager
-                .getLastLocation(LocationManager.GPS_PROVIDER)
+            val simpleLocation = locationManager.getLastLocation(locationProvider)
 
             if (simpleLocation == null) {
                 val lastLocationUpdate =
-                    locationManager.awaitLastLocationUpdate(LocationManager.GPS_PROVIDER)
+                    locationManager.awaitLastLocationUpdate(locationProvider)
                 lastLocationUpdate?.let {
                     SimpleLocationResult.Success(it)
                 } ?: SimpleLocationResult.NullLocation
