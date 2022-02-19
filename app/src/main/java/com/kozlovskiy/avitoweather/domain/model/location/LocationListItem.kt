@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.domain.model
+package com.kozlovskiy.avitoweather.domain.model.location
 
 sealed class LocationListItem
 

@@ -1,14 +1,15 @@
 package com.kozlovskiy.avitoweather.domain.usecase
 
+import android.util.Log
 import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
+import com.kozlovskiy.avitoweather.domain.SimpleLocationManager
+import com.kozlovskiy.avitoweather.domain.SimpleLocationResult
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.model.summary.OneCall
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
 import com.kozlovskiy.avitoweather.domain.util.GeocoderUtils
-import com.kozlovskiy.avitoweather.domain.util.SimpleLocationManager
-import com.kozlovskiy.avitoweather.domain.util.SimpleLocationResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,16 +27,8 @@ class GetWeatherUseCase @Inject constructor(
     operator fun invoke(): Flow<WeatherResult> = flow {
         emit(WeatherResult.Loading)
 
-        val storedLocation = sharedPreferenceManager.getStoredLocation()
-
-        val simpleLocationResult: SimpleLocationResult =
-            SimpleLocationResult.Success(
-                storedLocation ?: SimpleLocation(
-                    latitude = 55.7146576f,
-                    longitude = 37.8022313f
-                )
-            )
-//        val simpleLocationResult = locationManager.askForLastLocation()
+        val simpleLocationResult = locationManager.askForLocation()
+        Log.d("TAG", "invoke: $simpleLocationResult")
         when (simpleLocationResult) {
             is SimpleLocationResult.Failure -> {
                 emit(WeatherResult.Failure(simpleLocationResult.exception))
@@ -44,7 +37,7 @@ class GetWeatherUseCase @Inject constructor(
                 emit(WeatherResult.NoPermission)
             }
             is SimpleLocationResult.NullLocation -> {
-                emit(WeatherResult.BadLocation)
+                emit(WeatherResult.NullLocation)
             }
             is SimpleLocationResult.Success -> {
                 val location = simpleLocationResult.location
@@ -69,7 +62,7 @@ class GetWeatherUseCase @Inject constructor(
 sealed class WeatherResult {
     object Loading : WeatherResult()
     object NoPermission : WeatherResult()
-    object BadLocation : WeatherResult()
+    object NullLocation : WeatherResult()
 
     class Success(val location: SimpleLocation, val oneCall: OneCall) : WeatherResult()
     class Failure(val exception: Exception) : WeatherResult()

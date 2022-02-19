@@ -3,9 +3,9 @@ package com.kozlovskiy.avitoweather.presentation.location.adapter
 import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateViewBinding
 import com.kozlovskiy.avitoweather.databinding.LocationItemBinding
 import com.kozlovskiy.avitoweather.databinding.MyLocationItemBinding
-import com.kozlovskiy.avitoweather.domain.model.ListLocation
-import com.kozlovskiy.avitoweather.domain.model.LocationListItem
-import com.kozlovskiy.avitoweather.domain.model.MyLocation
+import com.kozlovskiy.avitoweather.domain.model.location.ListLocation
+import com.kozlovskiy.avitoweather.domain.model.location.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.location.MyLocation
 
 fun listLocationDelegate(
     onLocationSelected: (ListLocation) -> Unit,

@@ -1,7 +1,7 @@
 package com.kozlovskiy.avitoweather.data.api.model
 
 import com.google.gson.annotations.SerializedName
-import com.kozlovskiy.avitoweather.domain.model.SimpleLocation
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import java.util.*
 
 data class GeocoderResponse(

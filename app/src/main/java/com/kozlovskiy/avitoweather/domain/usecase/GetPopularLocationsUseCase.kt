@@ -1,6 +1,6 @@
 package com.kozlovskiy.avitoweather.domain.usecase
 
-import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.location.LocationListItem
 import com.kozlovskiy.avitoweather.domain.repository.LocationsRepository
 import javax.inject.Inject
 

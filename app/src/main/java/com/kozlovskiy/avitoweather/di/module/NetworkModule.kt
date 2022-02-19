@@ -1,11 +1,15 @@
 package com.kozlovskiy.avitoweather.di.module
 
+import android.content.Context
 import com.google.gson.Gson
+import com.kozlovskiy.avitoweather.R
 import com.kozlovskiy.avitoweather.data.api.OpenweatherService
 import com.kozlovskiy.avitoweather.data.api.TokenInterceptor
+import com.kozlovskiy.avitoweather.di.qualifier.ApplicationProperties
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -34,10 +38,10 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(interceptor: TokenInterceptor): OkHttpClient {
         return OkHttpClient()
             .newBuilder()
-            .addInterceptor(TokenInterceptor())
+            .addInterceptor(interceptor)
             .build()
     }
 
@@ -45,4 +49,13 @@ object NetworkModule {
     @Singleton
     fun provideGson(): Gson = Gson()
 
+    @Provides
+    @Singleton
+    @ApplicationProperties
+    fun provideAppId(
+        @ApplicationContext
+        appContext: Context,
+    ): String {
+        return appContext.getString(R.string.appid)
+    }
 }

@@ -1,6 +1,6 @@
 package com.kozlovskiy.avitoweather.presentation.location
 
-import com.kozlovskiy.avitoweather.domain.model.LocationListItem
+import com.kozlovskiy.avitoweather.domain.model.location.LocationListItem
 
 data class LocationState(
     val locations: List<LocationListItem> = emptyList(),
