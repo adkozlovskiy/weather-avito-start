@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
 import com.kozlovskiy.avitoweather.domain.model.location.ListLocation
+import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
 import com.kozlovskiy.avitoweather.domain.usecase.SearchLocationsUseCase
@@ -25,15 +26,21 @@ class LocationViewModel @Inject constructor(
     private val _locationState = MutableStateFlow(LocationState())
     val locationState = _locationState.asStateFlow()
 
+    // Save previous location and new selected location.
+    private val previousLocation = sharedPreferenceManager.getStoredLocation()
+    private var updatedLocation: SimpleLocation? = previousLocation
+
     fun onLocationSelected(location: ListLocation) = viewModelScope
         .launch {
+            updatedLocation = location.toSimpleLocation()
             sharedPreferenceManager.storeLocation(
-                latitude = location.latitude,
-                longitude = location.longitude
+                updatedLocation!!.latitude,
+                updatedLocation!!.longitude
             )
         }
 
     fun onMyLocationSelected() = viewModelScope.launch {
+        updatedLocation = null
         sharedPreferenceManager.chooseMyLocation()
     }
 
@@ -72,6 +79,8 @@ class LocationViewModel @Inject constructor(
             }
         }
     }
+
+    fun isLocationWasChanged() = previousLocation != updatedLocation
 
     private fun setDefaultLocations() = viewModelScope.launch {
         val popularLocations = getPopularLocationsUseCase()

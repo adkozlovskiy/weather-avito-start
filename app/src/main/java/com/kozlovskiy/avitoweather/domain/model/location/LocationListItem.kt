@@ -8,6 +8,10 @@ data class ListLocation(
     val state: String?,
     val latitude: Float,
     val longitude: Float,
-) : LocationListItem()
+) : LocationListItem() {
+    fun toSimpleLocation(): SimpleLocation {
+        return SimpleLocation(latitude, longitude, locality, country, state)
+    }
+}
 
 object MyLocation : LocationListItem()

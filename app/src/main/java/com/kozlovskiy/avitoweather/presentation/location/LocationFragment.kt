@@ -64,7 +64,12 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
 
     private fun setUpToolbar() {
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            val navController = findNavController()
+            if (viewModel.isLocationWasChanged()) {
+                navController.navigate(R.id.summaryFragment)
+            } else {
+                navController.navigateUp()
+            }
         }
     }
 

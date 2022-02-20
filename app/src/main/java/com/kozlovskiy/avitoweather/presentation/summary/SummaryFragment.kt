@@ -2,7 +2,6 @@ package com.kozlovskiy.avitoweather.presentation.summary
 
 import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -15,6 +14,7 @@ import com.kozlovskiy.avitoweather.common.collectOnLifecycle
 import com.kozlovskiy.avitoweather.common.getOr
 import com.kozlovskiy.avitoweather.databinding.SummaryFragmentBinding
 import com.kozlovskiy.avitoweather.domain.model.summary.Current
+import com.kozlovskiy.avitoweather.domain.util.DialogUtils
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyDividerDecorator
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyWeatherAdapter
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.HourlyWeatherAdapter
@@ -45,10 +45,29 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
                     requestLocationPermissions()
                 }
                 is SummaryState.FailureInfo.BadLocation -> {
-
+                    DialogUtils.getBadLocationDialog(
+                        requireContext(),
+                        onRetryAction = {
+                            viewModel.loadWeather()
+                        },
+                        onDismissAction = {
+                            viewModel.suppressError()
+                        },
+                        onManuallySelectAction = {
+                            navigateToLocationFragment()
+                        }
+                    )
                 }
                 is SummaryState.FailureInfo.Unknown -> {
-                    Log.d("TAG", "onViewCreated: ${summaryState.failure.ex}")
+                    DialogUtils.getUnknownErrorDialog(
+                        requireContext(),
+                        onRetryAction = {
+                            viewModel.loadWeather()
+                        },
+                        onDismissAction = {
+                            viewModel.suppressError()
+                        }
+                    )
                 }
                 null -> {
                     showLocationInfo(summaryState.location)
@@ -61,11 +80,6 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadWeather()
     }
 
     private fun showLocationInfo(location: String?) {
@@ -97,8 +111,12 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
 
     private fun setUpClickListeners() {
         binding.btnSettings.setOnClickListener {
-            findNavController().navigate(R.id.action_summaryFragment_to_locationFragment)
+            navigateToLocationFragment()
         }
+    }
+
+    private fun navigateToLocationFragment() {
+        findNavController().navigate(R.id.action_summaryFragment_to_locationFragment)
     }
 
     private fun requestLocationPermissions() {

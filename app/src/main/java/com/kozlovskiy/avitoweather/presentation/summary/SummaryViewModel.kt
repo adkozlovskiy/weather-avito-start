@@ -20,6 +20,10 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow(value = SummaryState())
     val summaryState = _summaryState.asStateFlow()
 
+    init {
+        loadWeather()
+    }
+
     fun loadWeather() = viewModelScope.launch {
         if (_summaryState.value.loading) {
             return@launch
@@ -67,5 +71,9 @@ class SummaryViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun suppressError() {
+        _summaryState.update { it.copy(failure = null) }
     }
 }
