@@ -59,7 +59,7 @@ class LocationViewModel @Inject constructor(
                         it.copy(
                             loading = false,
                             locations = result.locations.map { simpleLocation ->
-                                ListLocation.fromSimpleLocation(simpleLocation)
+                                simpleLocation.toListLocation()
                             }
                         )
                     }

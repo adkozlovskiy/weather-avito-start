@@ -28,7 +28,7 @@ class SummaryViewModel @Inject constructor(
         getWeatherUseCase().collect { result ->
             when (result) {
                 is WeatherResult.Loading -> {
-                    _summaryState.update { it.copy(loading = true) }
+                    _summaryState.update { it.copy(loading = true, failure = null) }
                 }
                 is WeatherResult.Failure -> {
                     _summaryState.update {
@@ -50,7 +50,6 @@ class SummaryViewModel @Inject constructor(
                     }
                 }
                 is WeatherResult.NullLocation -> {
-                    // TODO subscribe on location changes listener
                     _summaryState.update {
                         it.copy(
                             loading = false,
