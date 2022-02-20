@@ -33,9 +33,11 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginEnd="12dp"
+        android:contentDescription="@string/weather_icon_cd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/tv_temp_day"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/d1" />
 
     <TextView
         android:id="@+id/tv_temp_day"

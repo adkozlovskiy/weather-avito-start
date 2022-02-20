@@ -28,6 +28,7 @@
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="8dp"
+            android:contentDescription="@string/go_to_location_cd"
             android:src="@drawable/ic_edit_location"
             app:layout_constraintBottom_toBottomOf="@id/tv_location"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,10 +51,12 @@
             android:id="@+id/iv_icon"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:contentDescription="@string/weather_icon_cd"
             app:layout_constraintBottom_toBottomOf="@id/tv_temp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_temp"
-            app:layout_constraintTop_toTopOf="@id/tv_temp" />
+            app:layout_constraintTop_toTopOf="@id/tv_temp"
+            tools:src="@drawable/d1" />
 
         <TextView
             android:id="@+id/tv_title"

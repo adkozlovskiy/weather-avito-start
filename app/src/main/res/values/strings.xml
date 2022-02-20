@@ -12,4 +12,6 @@
     <string name="unknown_error_message">Something went wrong, but unfortunately we don\'t know what :(</string>
     <string name="bad_location">Bad location</string>
     <string name="bad_location_message">we were unable to determine your location correctly, please check the availability of the GPS or enter the location manually.</string>
+    <string name="weather_icon_cd">Weather icon</string>
+    <string name="go_to_location_cd">Change location</string>
 </resources>
