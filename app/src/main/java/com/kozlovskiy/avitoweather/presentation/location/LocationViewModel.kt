@@ -9,10 +9,7 @@ import com.kozlovskiy.avitoweather.domain.usecase.GetPopularLocationsUseCase
 import com.kozlovskiy.avitoweather.domain.usecase.LocationsResult
 import com.kozlovskiy.avitoweather.domain.usecase.SearchLocationsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,6 +23,9 @@ class LocationViewModel @Inject constructor(
     private val _locationState = MutableStateFlow(LocationState())
     val locationState = _locationState.asStateFlow()
 
+    private val _navigateUpState = MutableSharedFlow<Boolean>(extraBufferCapacity = 1)
+    val navigateUpState = _navigateUpState.asSharedFlow()
+
     // Save previous location and new selected location.
     private val previousLocation = sharedPreferenceManager.getStoredLocation()
     private var updatedLocation: SimpleLocation? = previousLocation
@@ -37,11 +37,13 @@ class LocationViewModel @Inject constructor(
                 updatedLocation!!.latitude,
                 updatedLocation!!.longitude
             )
+            navigateUp()
         }
 
     fun onMyLocationSelected() = viewModelScope.launch {
         updatedLocation = null
         sharedPreferenceManager.chooseMyLocation()
+        navigateUp()
     }
 
     init {
@@ -87,5 +89,9 @@ class LocationViewModel @Inject constructor(
         _locationState.update {
             it.copy(locations = popularLocations)
         }
+    }
+
+    private suspend fun navigateUp() {
+        _navigateUpState.emit(true)
     }
 }

@@ -1,6 +1,7 @@
 package com.kozlovskiy.avitoweather.presentation.summary
 
-import android.Manifest
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -83,7 +84,7 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
     }
 
     private fun showLocationInfo(location: String?) {
-        binding.tvLocation.text = location ?: ""
+        binding.toolbar.title = location ?: ""
     }
 
     private fun setUpRecyclerViews() {
@@ -110,9 +111,12 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
     }
 
     private fun setUpClickListeners() {
-        binding.btnSettings.setOnClickListener {
-            navigateToLocationFragment()
-        }
+        binding.toolbar.menu
+            .findItem(R.id.action_settings)
+            .setOnMenuItemClickListener {
+                navigateToLocationFragment()
+                true
+            }
     }
 
     private fun navigateToLocationFragment() {
@@ -121,19 +125,16 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
 
     private fun requestLocationPermissions() {
         requestPermissionLauncher.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
+            arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION)
         )
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions: Map<String, Boolean> ->
-        if (permissions.getOr(Manifest.permission.ACCESS_FINE_LOCATION, false)
-            && permissions.getOr(Manifest.permission.ACCESS_COARSE_LOCATION, false)
-        ) {
+        val finePermissionGranted = permissions.getOr(ACCESS_FINE_LOCATION, false)
+        val coarsePermissionGranted = permissions.getOr(ACCESS_COARSE_LOCATION, false)
+        if (finePermissionGranted && coarsePermissionGranted) {
             // Granted permissions section.
             viewModel.loadWeather()
         }
