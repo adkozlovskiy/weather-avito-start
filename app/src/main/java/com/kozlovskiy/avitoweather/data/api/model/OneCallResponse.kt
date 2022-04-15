@@ -15,14 +15,15 @@ data class OneCallResponse(
     fun toOneCall(iconResolver: IconResolver): OneCall {
         return OneCall(
             current = currentResponse.toCurrent(iconResolver),
-            dailies = dailyResponses.map { it.toDaily(iconResolver) },
+            dailies = dailyResponses.map { it.toDaily(iconResolver) }
+                .subList(1, dailyResponses.size),
             hourlies = hourlyResponses
-                .take(MAX_HOURLIES_COUNT)
+                .subList(1, MAX_HOURLIES_SIZE)
                 .map { it.toHourly(iconResolver) }
         )
     }
 
     companion object {
-        const val MAX_HOURLIES_COUNT = 12
+        const val MAX_HOURLIES_SIZE = 14
     }
 }
