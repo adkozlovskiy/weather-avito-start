@@ -28,11 +28,15 @@ class PeriodicForecastWorker @AssistedInject constructor(
             val weatherResult: WeatherResult = getWeatherUseCase()
         ) {
             is WeatherResult.Success -> {
-                showNotification(
-                    weatherResult.location.locality ?: "",
-                    weatherResult.oneCall.current.temp
-                )
-                Result.success()
+                weatherResult.location.locality?.let {
+                    showNotification(
+                        it,
+                        weatherResult.oneCall.current.temp
+                    )
+                    Result.success()
+                }
+
+                Result.failure()
             }
             else -> {
                 Result.failure()

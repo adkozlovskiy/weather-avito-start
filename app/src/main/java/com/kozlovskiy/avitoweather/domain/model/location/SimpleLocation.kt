@@ -1,8 +1,14 @@
 package com.kozlovskiy.avitoweather.domain.model.location
 
+/**
+ * Не для использования в списке локаций.
+ */
 data class SimpleLocation(
     val latitude: Float,
     val longitude: Float,
+    /**
+     * Одно неразделенное значение (либо локалити, либо страна)
+     */
     val locality: String? = null,
     val country: String? = null,
     val state: String? = null,
