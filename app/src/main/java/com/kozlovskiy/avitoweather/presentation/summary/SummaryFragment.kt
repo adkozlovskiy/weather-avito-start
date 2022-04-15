@@ -99,7 +99,7 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
     private fun showCurrentWeather(current: Current) {
         with(binding) {
             tvTemp.text = current.temp
-            tvTitle.text = current.title
+            tvTitle.text = current.description
             tvFeelsLike.text = getString(R.string.feels_like, current.feelsLike)
 
             ivIcon.setImageDrawable(current.icon)

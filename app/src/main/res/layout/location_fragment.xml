@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:navigationIcon="@drawable/ic_return"
-        app:title="@string/locations" />
+        app:title="@string/locations"
+        app:titleTextColor="@color/black" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/search"

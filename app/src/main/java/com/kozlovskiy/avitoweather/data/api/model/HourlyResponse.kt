@@ -22,7 +22,7 @@ data class HourlyResponse(
     fun toHourly(iconResolver: IconResolver): Hourly {
         return Hourly(
             time = ScaleUtils.timeFromSeconds(dt),
-            temp = ScaleUtils.celsiusFromKelvins(temp),
+            temp = ScaleUtils.toDegreesString(temp),
             icon = iconResolver.resolve(weatherResponse[0].icon)
         )
     }
