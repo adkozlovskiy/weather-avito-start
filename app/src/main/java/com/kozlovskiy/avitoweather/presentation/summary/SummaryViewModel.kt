@@ -20,6 +20,10 @@ class SummaryViewModel @Inject constructor(
     private val _summaryState = MutableStateFlow(value = SummaryState())
     val summaryState = _summaryState.asStateFlow()
 
+    init {
+        loadWeather()
+    }
+
     fun loadWeather() = viewModelScope.launch {
         if (_summaryState.value.loading) {
             return@launch
@@ -28,7 +32,7 @@ class SummaryViewModel @Inject constructor(
         getWeatherUseCase().collect { result ->
             when (result) {
                 is WeatherResult.Loading -> {
-                    _summaryState.update { it.copy(loading = true) }
+                    _summaryState.update { it.copy(loading = true, failure = null) }
                 }
                 is WeatherResult.Failure -> {
                     _summaryState.update {
@@ -50,7 +54,6 @@ class SummaryViewModel @Inject constructor(
                     }
                 }
                 is WeatherResult.NullLocation -> {
-                    // TODO subscribe on location changes listener
                     _summaryState.update {
                         it.copy(
                             loading = false,
@@ -68,5 +71,9 @@ class SummaryViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun suppressError() {
+        _summaryState.update { it.copy(failure = null) }
     }
 }

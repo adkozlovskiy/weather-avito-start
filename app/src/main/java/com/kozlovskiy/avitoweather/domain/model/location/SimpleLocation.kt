@@ -10,4 +10,14 @@ data class SimpleLocation(
     fun withLocality(name: String): SimpleLocation {
         return this.copy(locality = name)
     }
+
+    fun toListLocation(): ListLocation {
+        return ListLocation(
+            locality = locality,
+            country = country,
+            state = state,
+            latitude = latitude,
+            longitude = longitude
+        )
+    }
 }

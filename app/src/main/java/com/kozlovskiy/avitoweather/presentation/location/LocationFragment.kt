@@ -21,17 +21,24 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
     private val viewModel: LocationViewModel by viewModels()
     private val binding by viewBinding(LocationFragmentBinding::bind)
 
+    private val locationsAdapter by lazy {
+        LocationsAdapter(
+            onLocationSelected = { viewModel.onLocationSelected(it) },
+            onMyLocationSelected = { viewModel.onMyLocationSelected() }
+        )
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpToolbar()
         setUpSearch()
+        setUpAdapter()
 
-        val locationsAdapter = LocationsAdapter(
-            onLocationSelected = { viewModel.onLocationSelected(it) },
-            onMyLocationSelected = { viewModel.onMyLocationSelected() }
-        )
-        binding.rvLocations.adapter = locationsAdapter
+        collectLocationState()
+        collectNavigationState()
+    }
 
+    private fun collectLocationState() {
         viewModel.locationState.collectOnLifecycle(
             lifecycleOwner = viewLifecycleOwner,
             state = Lifecycle.State.STARTED
@@ -50,6 +57,19 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
         }
     }
 
+    private fun setUpAdapter() {
+        binding.rvLocations.adapter = locationsAdapter
+    }
+
+    private fun collectNavigationState() {
+        viewModel.navigateUpState.collectOnLifecycle(
+            lifecycleOwner = viewLifecycleOwner,
+            state = Lifecycle.State.STARTED
+        ) {
+            if (it) forceNavigateUp()
+        }
+    }
+
     private fun setProgressbarVisible(loading: Boolean) {
         binding.progressBar.isVisible = loading
     }
@@ -64,7 +84,16 @@ class LocationFragment : Fragment(R.layout.location_fragment) {
 
     private fun setUpToolbar() {
         binding.toolbar.setNavigationOnClickListener {
-            findNavController().navigateUp()
+            forceNavigateUp()
+        }
+    }
+
+    private fun forceNavigateUp() {
+        val navController = findNavController()
+        if (viewModel.isLocationWasChanged()) {
+            navController.navigate(R.id.summaryFragment)
+        } else {
+            navController.navigateUp()
         }
     }
 

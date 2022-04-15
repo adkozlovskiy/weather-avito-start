@@ -9,16 +9,8 @@ data class ListLocation(
     val latitude: Float,
     val longitude: Float,
 ) : LocationListItem() {
-    companion object {
-        fun fromSimpleLocation(simpleLocation: SimpleLocation): ListLocation {
-            return ListLocation(
-                locality = simpleLocation.locality,
-                country = simpleLocation.country,
-                state = simpleLocation.state,
-                latitude = simpleLocation.latitude,
-                longitude = simpleLocation.longitude
-            )
-        }
+    fun toSimpleLocation(): SimpleLocation {
+        return SimpleLocation(latitude, longitude, locality, country, state)
     }
 }
 

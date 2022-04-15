@@ -1,6 +1,5 @@
 package com.kozlovskiy.avitoweather.domain.usecase
 
-import android.util.Log
 import com.kozlovskiy.avitoweather.common.Result
 import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
 import com.kozlovskiy.avitoweather.domain.SharedPreferenceManager
@@ -27,8 +26,12 @@ class GetWeatherUseCase @Inject constructor(
     operator fun invoke(): Flow<WeatherResult> = flow {
         emit(WeatherResult.Loading)
 
-        val simpleLocationResult = locationManager.askForLocation()
-        Log.d("TAG", "invoke: $simpleLocationResult")
+        // Check if we have manually selected location.
+        val storedLocation = sharedPreferenceManager.getStoredLocation()
+        val simpleLocationResult = storedLocation
+            ?.let { SimpleLocationResult.Success(it) }
+            ?: locationManager.askForLocation()
+
         when (simpleLocationResult) {
             is SimpleLocationResult.Failure -> {
                 emit(WeatherResult.Failure(simpleLocationResult.exception))
