@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:menu="@menu/toolbar_menu"
+            app:titleTextColor="@color/black"
             tools:title="Москва" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -35,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:textColor="@color/black"
                 android:textSize="48sp"
                 app:layout_constraintEnd_toStartOf="@id/iv_icon"
                 app:layout_constraintHorizontal_chainStyle="packed"

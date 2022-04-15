@@ -86,11 +86,13 @@ class PeriodicForecastWorker @AssistedInject constructor(
     companion object {
         const val CHANNEL_ID = "periodic.worker.avito.weather"
         private const val HOUR_OF_NOTIFICATION = 9
+        private const val TAG = "periodic.worker"
 
         fun constructRequest(): WorkRequest {
             return OneTimeWorkRequestBuilder<PeriodicForecastWorker>()
                 .setInitialDelay(initialTimeDifference, TimeUnit.MILLISECONDS)
                 .setConstraints(constraints)
+                .addTag(TAG)
                 .build()
         }
 

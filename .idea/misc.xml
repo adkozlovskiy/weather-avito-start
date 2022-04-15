@@ -13,7 +13,12 @@
         <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/my_location_item.xml" value="0.33" />
         <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/summary_fragment.xml" value="0.25" />
         <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/drawable/ic_edit_location.xml" value="0.2985" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/drawable/ic_return.xml" value="0.328" />
         <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/drawable/ic_settings.xml" value="0.2985" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/daily_item.xml" value="0.5456410256410257" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/hourly_item.xml" value="0.5541666666666667" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/location_fragment.xml" value="0.5541666666666667" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/main_activity.xml" value="0.5541666666666667" />
         <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/summary_fragment.xml" value="0.5" />
         <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/menu/locations_menu.xml" value="0.48125" />
         <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/menu/toolbar_menu.xml" value="0.48125" />
