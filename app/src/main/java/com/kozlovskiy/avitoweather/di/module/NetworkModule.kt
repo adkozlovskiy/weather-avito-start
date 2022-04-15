@@ -4,7 +4,9 @@ import android.content.Context
 import com.google.gson.Gson
 import com.kozlovskiy.avitoweather.R
 import com.kozlovskiy.avitoweather.data.api.OpenweatherService
-import com.kozlovskiy.avitoweather.data.api.TokenInterceptor
+import com.kozlovskiy.avitoweather.data.api.interceptor.LanguageInterceptor
+import com.kozlovskiy.avitoweather.data.api.interceptor.TokenInterceptor
+import com.kozlovskiy.avitoweather.data.api.interceptor.UnitsInterceptor
 import com.kozlovskiy.avitoweather.di.qualifier.ApplicationProperties
 import dagger.Module
 import dagger.Provides
@@ -38,10 +40,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(interceptor: TokenInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        tokenInterceptor: TokenInterceptor,
+        unitsInterceptor: UnitsInterceptor,
+        languageInterceptor: LanguageInterceptor
+    ): OkHttpClient {
         return OkHttpClient()
             .newBuilder()
-            .addInterceptor(interceptor)
+            .addInterceptor(tokenInterceptor)
+            .addInterceptor(unitsInterceptor)
+            .addInterceptor(languageInterceptor)
             .build()
     }
 
