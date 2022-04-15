@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Avito Weather</string>
+    <string name="feels_like">Ощущается как: %1$s</string>
+    <string name="locations">Местоположение</string>
+    <string name="search">Поиск</string>
+    <string name="no_such_place">Место не найдено</string>
+    <string name="my_location">Моё местоположение</string>
+</resources>

@@ -3,7 +3,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/drawable/ic_return.xml" value="0.206" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/additional_item.xml" value="0.28888888888888886" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/daily_item.xml" value="0.28888888888888886" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/hourly_item.xml" value="0.75" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/location_fragment.xml" value="0.25" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/location_item.xml" value="0.3645833333333333" />
         <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/main_activity.xml" value="0.5541666666666667" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/my_location_item.xml" value="0.33" />
+        <entry key="..\:/Android projects/AvitoWeather/app/src/main/res/layout/summary_fragment.xml" value="0.25" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/drawable/ic_edit_location.xml" value="0.2985" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/drawable/ic_settings.xml" value="0.2985" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/layout/summary_fragment.xml" value="0.1" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/menu/locations_menu.xml" value="0.48125" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/menu/toolbar_menu.xml" value="0.48125" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1665" />
+        <entry key="..\:/android_projects/AvitoWeather/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1665" />
       </map>
     </option>
   </component>
