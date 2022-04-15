@@ -56,33 +56,31 @@ class LocationViewModel @Inject constructor(
             return@launch
         }
 
-        searchLocationsUseCase(query).collect { result ->
-            when (result) {
-                is LocationsResult.Loading -> {
-                    _locationState.update {
-                        it.copy(loading = true)
-                    }
+        showLoading()
+        when (val result = searchLocationsUseCase(query)) {
+            is LocationsResult.Success -> {
+                _locationState.update {
+                    it.copy(
+                        loading = false,
+                        locations = result.locations.map { simpleLocation ->
+                            simpleLocation.toListLocation()
+                        }
+                    )
                 }
-                is LocationsResult.Success -> {
-                    _locationState.update {
-                        it.copy(
-                            loading = false,
-                            locations = result.locations.map { simpleLocation ->
-                                simpleLocation.toListLocation()
-                            }
-                        )
-                    }
-                }
-                is LocationsResult.Failure -> {
-                    _locationState.update {
-                        it.copy(error = it.error, loading = false)
-                    }
+            }
+            is LocationsResult.Failure -> {
+                _locationState.update {
+                    it.copy(error = it.error, loading = false)
                 }
             }
         }
     }
 
     fun isLocationWasChanged() = previousLocation != updatedLocation
+
+    private fun showLoading() {
+        _locationState.update { it.copy(loading = true, error = null) }
+    }
 
     private fun setDefaultLocations() = viewModelScope.launch {
         val popularLocations = getPopularLocationsUseCase()
