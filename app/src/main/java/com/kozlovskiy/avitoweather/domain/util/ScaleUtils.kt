@@ -5,6 +5,10 @@ import java.util.*
 import kotlin.math.roundToInt
 
 object ScaleUtils {
+    fun hPaToMmHg(hPa: Int): Int {
+        return (hPa / 1.33).roundToInt()
+    }
+
     fun toDegreesString(temp: Double): String {
         return "${temp.roundToInt()}\u00B0"
     }

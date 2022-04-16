@@ -3,6 +3,7 @@ package com.kozlovskiy.avitoweather.presentation.summary
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -18,7 +19,7 @@ import com.kozlovskiy.avitoweather.domain.model.summary.Current
 import com.kozlovskiy.avitoweather.domain.util.DialogUtils
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyDividerDecorator
 import com.kozlovskiy.avitoweather.presentation.summary.adapter.DailyWeatherAdapter
-import com.kozlovskiy.avitoweather.presentation.summary.adapter.HourlyWeatherAdapter
+import com.kozlovskiy.avitoweather.presentation.summary.adapter.hourly.HourlyWeatherAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -77,7 +78,7 @@ class SummaryFragment : Fragment(R.layout.summary_fragment) {
                         showCurrentWeather(summaryState.current)
                     }
                     dailyAdapter.submitList(summaryState.daily)
-                    hourlyAdapter.submitList(summaryState.hourly)
+                    hourlyAdapter.items = summaryState.hourly
                 }
             }
         }

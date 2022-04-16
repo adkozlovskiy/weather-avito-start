@@ -6,4 +6,4 @@ data class Hourly(
     val time: String,
     val temp: String,
     val icon: Drawable,
-)
+) : SummaryListItem()
