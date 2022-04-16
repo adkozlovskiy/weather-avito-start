@@ -7,7 +7,6 @@ import com.kozlovskiy.avitoweather.domain.usecase.WeatherResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,45 +28,41 @@ class SummaryViewModel @Inject constructor(
             return@launch
         }
 
-        getWeatherUseCase().collect { result ->
-            when (result) {
-                is WeatherResult.Loading -> {
-                    _summaryState.update { it.copy(loading = true, failure = null) }
+        showLoading()
+        when (val result = getWeatherUseCase()) {
+            is WeatherResult.Failure -> {
+                _summaryState.update {
+                    it.copy(
+                        loading = false,
+                        failure = SummaryState.FailureInfo.Unknown(result.exception)
+                    )
                 }
-                is WeatherResult.Failure -> {
-                    _summaryState.update {
-                        it.copy(
-                            loading = false,
-                            failure = SummaryState.FailureInfo.Unknown(result.exception)
-                        )
-                    }
+            }
+            is WeatherResult.Success -> {
+                _summaryState.update {
+                    it.copy(
+                        loading = false,
+                        location = result.location.locality,
+                        current = result.oneCall.current,
+                        daily = result.oneCall.dailies,
+                        hourly = result.oneCall.hourlies
+                    )
                 }
-                is WeatherResult.Success -> {
-                    _summaryState.update {
-                        it.copy(
-                            loading = false,
-                            location = result.location.locality,
-                            current = result.oneCall.current,
-                            daily = result.oneCall.dailies,
-                            hourly = result.oneCall.hourlies
-                        )
-                    }
+            }
+            is WeatherResult.NullLocation -> {
+                _summaryState.update {
+                    it.copy(
+                        loading = false,
+                        failure = SummaryState.FailureInfo.BadLocation
+                    )
                 }
-                is WeatherResult.NullLocation -> {
-                    _summaryState.update {
-                        it.copy(
-                            loading = false,
-                            failure = SummaryState.FailureInfo.BadLocation
-                        )
-                    }
-                }
-                is WeatherResult.NoPermission -> {
-                    _summaryState.update {
-                        it.copy(
-                            loading = false,
-                            failure = SummaryState.FailureInfo.NoLocationPermission
-                        )
-                    }
+            }
+            is WeatherResult.NoPermission -> {
+                _summaryState.update {
+                    it.copy(
+                        loading = false,
+                        failure = SummaryState.FailureInfo.NoLocationPermission
+                    )
                 }
             }
         }
@@ -75,5 +70,9 @@ class SummaryViewModel @Inject constructor(
 
     fun suppressError() {
         _summaryState.update { it.copy(failure = null) }
+    }
+
+    private fun showLoading() {
+        _summaryState.update { it.copy(loading = true, failure = null) }
     }
 }

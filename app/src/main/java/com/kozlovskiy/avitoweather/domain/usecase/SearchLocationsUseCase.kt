@@ -5,9 +5,7 @@ import com.kozlovskiy.avitoweather.di.qualifier.IoDispatcher
 import com.kozlovskiy.avitoweather.domain.model.location.SimpleLocation
 import com.kozlovskiy.avitoweather.domain.repository.GeocoderRepository
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SearchLocationsUseCase @Inject constructor(
@@ -16,20 +14,18 @@ class SearchLocationsUseCase @Inject constructor(
     private val geocoderRepository: GeocoderRepository,
 ) {
 
-    operator fun invoke(query: String): Flow<LocationsResult> = flow {
-        emit(LocationsResult.Loading)
-
-        val locations = geocoderRepository.getLocationsByQuery(query, LOCATIONS_LIMIT)
-
-        when (locations) {
+    suspend operator fun invoke(query: String): LocationsResult = withContext(dispatcher) {
+        return@withContext when (
+            val locations = geocoderRepository.getLocationsByQuery(query, LOCATIONS_LIMIT)
+        ) {
             is Result.Error -> {
-                emit(LocationsResult.Failure(locations.exception))
+                LocationsResult.Failure(locations.exception)
             }
             is Result.Success -> {
-                emit(LocationsResult.Success(locations.data))
+                LocationsResult.Success(locations.data)
             }
         }
-    }.flowOn(dispatcher)
+    }
 
     companion object {
         const val LOCATIONS_LIMIT = 5
@@ -37,8 +33,6 @@ class SearchLocationsUseCase @Inject constructor(
 }
 
 sealed class LocationsResult {
-    object Loading : LocationsResult()
-
     data class Success(val locations: List<SimpleLocation>) : LocationsResult()
     data class Failure(val ex: Exception) : LocationsResult()
 }

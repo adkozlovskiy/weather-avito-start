@@ -16,21 +16,24 @@ data class CurrentResponse(
     val temp: Double,
     @SerializedName("feels_like")
     val feelsLike: Double,
+    @SerializedName("pressure")
+    val pressure: Int,
+    @SerializedName("humidity")
+    val humidity: Int,
     @SerializedName("wind_speed")
     val windSpeed: Double,
     @SerializedName("wind_deg")
-    val windDeg: Double,
+    val windDeg: Int,
     @SerializedName("weather")
     val weather: List<WeatherResponse>,
 ) {
     fun toCurrent(iconResolver: IconResolver): Current {
         return Current(
-            temp = ScaleUtils.celsiusFromKelvins(temp),
-            feelsLike = ScaleUtils.celsiusFromKelvins(feelsLike),
-            windDirection = "",
-            windSpeed = "",
-            title = weather[0].main,
-            description = weather[0].description,
+            temp = ScaleUtils.toDegreesString(temp),
+            feelsLike = ScaleUtils.toDegreesString(feelsLike),
+            description = weather[0].description.replaceFirstChar {
+                it.uppercase()
+            },
             icon = iconResolver.resolve(weather[0].icon)
         )
     }

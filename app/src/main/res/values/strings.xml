@@ -11,8 +11,22 @@
     <string name="unknown_error">Unknown error</string>
     <string name="unknown_error_message">Something went wrong, but unfortunately we don\'t know what :(</string>
     <string name="bad_location">Bad location</string>
-    <string name="bad_location_message">we were unable to determine your location correctly, please check the availability of the GPS or enter the location manually.</string>
+    <string name="bad_location_message">We were unable to determine your location correctly, please check the availability of the GPS or enter the location manually.</string>
     <string name="weather_icon_cd">Weather icon</string>
     <string name="go_to_location_cd">Change location</string>
     <string name="settings">Settings</string>
+    <string name="channel_name">Periodic weather reports</string>
+    <string name="channel_description">We will periodically notify you of changes in the weather.</string>
+    <string name="notification_title">Weather information</string>
+    <string name="notification_content" translatable="false">%1$s: %2$s\u00B0</string>
+    <string name="wind_template">%1$d m/s, %2$s</string>
+    <string name="wind_ne">NE</string>
+    <string name="wind_e">E</string>
+    <string name="wind_se">SE</string>
+    <string name="wind_s">S</string>
+    <string name="wind_sw">SW</string>
+    <string name="wind_w">W</string>
+    <string name="wind_nw">NW</string>
+    <string name="wind_n">N</string>
+    <string name="pressure_template">%1$d mmHg.</string>
 </resources>

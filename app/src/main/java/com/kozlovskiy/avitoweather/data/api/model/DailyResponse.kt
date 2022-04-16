@@ -27,8 +27,8 @@ data class DailyResponse(
         return Daily(
             date = ScaleUtils.dateFromSeconds(dt),
             day = ScaleUtils.dayOfWeekFromSeconds(dt),
-            tempDay = ScaleUtils.celsiusFromKelvins(temp.day),
-            tempNight = ScaleUtils.celsiusFromKelvins(temp.night),
+            tempDay = ScaleUtils.toDegreesString(temp.day),
+            tempNight = ScaleUtils.toDegreesString(temp.night),
             icon = iconResolver.resolve(weatherResponse[0].icon)
         )
     }

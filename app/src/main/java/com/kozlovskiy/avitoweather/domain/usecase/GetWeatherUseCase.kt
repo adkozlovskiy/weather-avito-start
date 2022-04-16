@@ -10,9 +10,7 @@ import com.kozlovskiy.avitoweather.domain.model.summary.OneCall
 import com.kozlovskiy.avitoweather.domain.repository.WeatherRepository
 import com.kozlovskiy.avitoweather.domain.util.GeocoderUtils
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetWeatherUseCase @Inject constructor(
@@ -23,39 +21,37 @@ class GetWeatherUseCase @Inject constructor(
     @IoDispatcher
     private val dispatcher: CoroutineDispatcher,
 ) {
-    operator fun invoke(): Flow<WeatherResult> = flow {
-        emit(WeatherResult.Loading)
-
+    suspend operator fun invoke(): WeatherResult = withContext(dispatcher) {
         // Check if we have manually selected location.
         val storedLocation = sharedPreferenceManager.getStoredLocation()
         val simpleLocationResult = storedLocation
             ?.let { SimpleLocationResult.Success(it) }
             ?: locationManager.askForLocation()
 
-        when (simpleLocationResult) {
+        return@withContext when (simpleLocationResult) {
             is SimpleLocationResult.Failure -> {
-                emit(WeatherResult.Failure(simpleLocationResult.exception))
+                WeatherResult.Failure(simpleLocationResult.exception)
             }
             is SimpleLocationResult.NoPermission -> {
-                emit(WeatherResult.NoPermission)
+                WeatherResult.NoPermission
             }
             is SimpleLocationResult.NullLocation -> {
-                emit(WeatherResult.NullLocation)
+                WeatherResult.NullLocation
             }
             is SimpleLocationResult.Success -> {
                 val location = simpleLocationResult.location
                     .let {
                         geocoderUtils.completeLocationWithName(it)
                     }
-                val oneCallResult = getWeatherResult(location)
-                emit(oneCallResult)
+                getWeatherResult(location)
             }
         }
-    }.flowOn(dispatcher)
+    }
 
     private suspend fun getWeatherResult(location: SimpleLocation): WeatherResult {
-        val result = repository.getOneCallWeather(location)
-        return when (result) {
+        return when (
+            val result = repository.getOneCallWeather(location)
+        ) {
             is Result.Error -> WeatherResult.Failure(result.exception)
             is Result.Success -> WeatherResult.Success(location, result.data)
         }
@@ -63,7 +59,6 @@ class GetWeatherUseCase @Inject constructor(
 }
 
 sealed class WeatherResult {
-    object Loading : WeatherResult()
     object NoPermission : WeatherResult()
     object NullLocation : WeatherResult()
 

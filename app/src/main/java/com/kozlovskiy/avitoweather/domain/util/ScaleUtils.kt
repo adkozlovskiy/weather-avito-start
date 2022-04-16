@@ -5,8 +5,12 @@ import java.util.*
 import kotlin.math.roundToInt
 
 object ScaleUtils {
-    fun celsiusFromKelvins(kelvins: Double): String {
-        return "${(kelvins - 273.15).roundToInt()}\u00B0"
+    fun hPaToMmHg(hPa: Int): Int {
+        return (hPa / 1.33).roundToInt()
+    }
+
+    fun toDegreesString(temp: Double): String {
+        return "${temp.roundToInt()}\u00B0"
     }
 
     fun timeFromSeconds(seconds: Long): String {

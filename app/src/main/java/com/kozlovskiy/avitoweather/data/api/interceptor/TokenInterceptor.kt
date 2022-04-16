@@ -1,4 +1,4 @@
-package com.kozlovskiy.avitoweather.data.api
+package com.kozlovskiy.avitoweather.data.api.interceptor
 
 import com.kozlovskiy.avitoweather.di.qualifier.ApplicationProperties
 import okhttp3.Interceptor
@@ -18,7 +18,6 @@ class TokenInterceptor @Inject constructor(
 
         val url = originalUrl.newBuilder()
             .addQueryParameter(TOKEN_PARAM_NAME, appId)
-            .addQueryParameter(EXCLUDE_PARAM_NAME, EXCLUDE)
             .build()
 
         val request = originalRequest.newBuilder()
@@ -30,8 +29,5 @@ class TokenInterceptor @Inject constructor(
 
     companion object {
         const val TOKEN_PARAM_NAME = "appid"
-
-        const val EXCLUDE_PARAM_NAME = "exclude"
-        const val EXCLUDE = "minutely,alerts"
     }
 }

@@ -15,10 +15,16 @@ fun listLocationDelegate(
     }
 ) {
     bind {
-        val stateInfo = item.state + ", " + item.country
+        val stateInfo = StringBuilder()
+        if (item.state != null) {
+            stateInfo.append(item.state)
+            stateInfo.append(", ")
+        }
+        stateInfo.append(item.country)
+
         with(binding) {
             locality.text = item.locality
-            state.text = stateInfo
+            state.text = stateInfo.toString()
 
             root.setOnClickListener {
                 onLocationSelected(item)

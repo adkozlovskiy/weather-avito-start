@@ -8,12 +8,19 @@
     android:orientation="vertical"
     tools:context=".presentation.summary.SummaryFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/toolbar_menu"
-        tools:title="Москва" />
+        android:backgroundTint="@color/white">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/toolbar_menu"
+            app:titleTextColor="@color/black"
+            tools:title="Москва" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -29,6 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:textColor="@color/black"
                 android:textSize="48sp"
                 app:layout_constraintEnd_toStartOf="@id/iv_icon"
                 app:layout_constraintHorizontal_chainStyle="packed"
