@@ -1,6 +1,5 @@
 package com.kozlovskiy.avitoweather.data.api.model
 
-import android.util.Log
 import com.google.gson.annotations.SerializedName
 import com.kozlovskiy.avitoweather.domain.model.summary.Current
 import com.kozlovskiy.avitoweather.domain.util.IconResolver
@@ -17,6 +16,14 @@ data class CurrentResponse(
     val temp: Double,
     @SerializedName("feels_like")
     val feelsLike: Double,
+    @SerializedName("pressure")
+    val pressure: Int,
+    @SerializedName("humidity")
+    val humidity: Int,
+    @SerializedName("wind_speed")
+    val windSpeed: Double,
+    @SerializedName("wind_deg")
+    val windDeg: Int,
     @SerializedName("weather")
     val weather: List<WeatherResponse>,
 ) {
@@ -28,8 +35,6 @@ data class CurrentResponse(
                 it.uppercase()
             },
             icon = iconResolver.resolve(weather[0].icon)
-        ).also {
-            Log.d("TAG", "toCurrent: $it")
-        }
+        )
     }
 }
